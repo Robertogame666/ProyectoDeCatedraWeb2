@@ -80,7 +80,9 @@ export const Home = () => {
           <p className="text-xl text-sky-100 mb-8">
             Descubre descuentos exclusivos en restaurantes, spas y más
           </p>
-          <Button size="lg">Ver ofertas</Button>
+          <Link to={`/detalle-oferta/${o.id}`}>
+            <Button className="w-full">Ver oferta</Button>
+          </Link>
         </div>
       </section>
 
@@ -142,7 +144,9 @@ export const Home = () => {
                   </span>
                 </div>
 
-                <Button className="w-full">Ver oferta</Button>
+                <Link to={`/detalle-oferta/${o.id}`}>
+                  <Button className="w-full">Ver oferta</Button>
+                </Link>
               </div>
             </div>
           ))}
