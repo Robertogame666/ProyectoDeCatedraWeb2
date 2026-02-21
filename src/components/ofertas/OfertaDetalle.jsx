@@ -1,4 +1,3 @@
-// src/components/ofertas/OfertaDetalle.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 

@@ -1,4 +1,3 @@
-// src/hooks/useOfertas.js
 import { useState, useEffect } from 'react';
 import { getOfertas, getOfertasPorRubro, getOfertaById, getRubros } from '../services/ofertasService';
 

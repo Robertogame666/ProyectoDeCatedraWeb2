@@ -80,8 +80,8 @@ export const Home = () => {
           <p className="text-xl text-sky-100 mb-8">
             Descubre descuentos exclusivos en restaurantes, spas y más
           </p>
-          <Link to={`/detalle-oferta/${o.id}`}>
-            <Button className="w-full">Ver oferta</Button>
+          <Link to="/ofertas">
+            <Button size="lg">Ver ofertas</Button>
           </Link>
         </div>
       </section>

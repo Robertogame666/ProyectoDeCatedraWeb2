@@ -25,7 +25,6 @@ export const OfertaCard = ({ oferta }) => {
     navigate(`/detalle-oferta/${id}`);
   };
 
-  // Colores según rubro (para Tailwind)
   const getRubroColor = (rubro) => {
     const colores = {
       'comida': 'from-orange-400 to-red-500',

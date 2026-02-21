@@ -19,7 +19,8 @@ export const AppRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       
-      {/* 👇 NUEVAS RUTAS DE OFERTAS (PÚBLICAS) */}
+      
+      {/* NUEVAS RUTAS DE OFERTAS (PÚBLICAS) */}
       <Route path="/ofertas" element={<Ofertas />} />
       <Route path="/detalle-oferta/:id" element={<DetalleOferta />} />
       <Route path="/ofertas/rubro/:rubro" element={<OfertasPorRubro />} />

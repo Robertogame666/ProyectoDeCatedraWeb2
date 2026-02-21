@@ -1,4 +1,3 @@
-// src/pages/Ofertas.jsx
 import React from 'react';
 import { useOfertas } from '../hooks/useOfertas';
 import { OfertasList } from '../components/ofertas/OfertasList';

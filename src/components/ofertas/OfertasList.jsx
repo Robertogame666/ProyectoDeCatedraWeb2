@@ -1,4 +1,3 @@
-// src/components/ofertas/OfertasList.jsx
 import React from 'react';
 import { OfertaCard } from './OfertaCard';
 

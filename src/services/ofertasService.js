@@ -72,6 +72,7 @@ export const getOfertaById = async (id) => {
   }
 };
 
+
 export const getRubros = async () => {
   try {
     const ofertas = await getOfertas();
