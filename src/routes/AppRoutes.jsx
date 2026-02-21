@@ -1,13 +1,15 @@
 // src/routes/AppRoutes.jsx
-
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import {Home} from '../pages/Home';
-import {Login} from '../pages/Login';
-import {Register} from '../pages/Register';
+import { Home } from '../pages/Home';
+import { Login } from '../pages/Login';
+import { Register } from '../pages/Register';
 import { MisCupones } from '../pages/MisCupones';
-import {MiPerfil} from '../pages/MiPerfil';
-import {ProtectedRoute} from './ProtectedRoute';
+import { MiPerfil } from '../pages/MiPerfil';
+import { ProtectedRoute } from './ProtectedRoute';
+import { DetalleOferta } from '../pages/DetalleOferta';
+import { OfertasPorRubro } from '../pages/OfertasPorRubro';
+import { Ofertas } from '../pages/Ofertas';
 
 export const AppRoutes = () => {
   return (
@@ -16,6 +18,11 @@ export const AppRoutes = () => {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      
+      {/* 👇 NUEVAS RUTAS DE OFERTAS (PÚBLICAS) */}
+      <Route path="/ofertas" element={<Ofertas />} />
+      <Route path="/detalle-oferta/:id" element={<DetalleOferta />} />
+      <Route path="/ofertas/rubro/:rubro" element={<OfertasPorRubro />} />
 
       {/* Rutas Protegidas */}
       <Route 
