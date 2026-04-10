@@ -7,81 +7,44 @@ import { useOfertas } from "../hooks/useOfertas";
 import { OfertaCard } from "../components/ofertas/OfertaCard";
 
 export const Home = () => {
-  const [rubroSeleccionado, setRubroSeleccionado] = useState("todos");
   const { ofertas, rubros, loading } = useOfertas();
+  const [rubroSeleccionado, setRubroSeleccionado] = useState("todos");
 
-  const ofertasDestacadas = [
-    {
-      id: 1,
-      titulo: "50% OFF en Buffet Completo",
-      empresa: "Restaurante El Buen Sabor",
-      precioRegular: 50,
-      precioOferta: 25,
-      descuento: 50,
-      icono: "/icons/restaurant_7845744.png",
-      rubro: "restaurantes",
-      color: "from-sky-400 to-emerald-400",
-    },
-    {
-      id: 2,
-      titulo: "Masaje Relajante 40% OFF",
-      empresa: "Spa Paradise",
-      precioRegular: 80,
-      precioOferta: 48,
-      descuento: 40,
-      icono: "/icons/spa_5099674.png",
-      rubro: "belleza",
-      color: "from-teal-400 to-emerald-500",
-    },
-    {
-      id: 3,
-      titulo: "Membresía Gym 30% OFF",
-      empresa: "Gym Fitness Pro",
-      precioRegular: 40,
-      precioOferta: 28,
-      descuento: 30,
-      icono: "/icons/maquina-de-gimnasio.png",
-      rubro: "fitness",
-      color: "from-emerald-400 to-green-500",
-    },
-    {
-        id: 4,
-        titulo: "Entrada al Cine 25% OFF",
-        empresa: "CineMax",
-        precioRegular: 50,
-        precioOferta: 37.5,
-        descuento: 25,
-        icono: "/icons/clapperboard_791294.png",
-        rubro: "entretenimiento",
-        color: "from-green-400 to-emerald-500",
-    }
-  ];
+  const rubrosUnicos = [
+  ...new Set(rubros.map(r => r?.toLowerCase().trim()))
+];
 
-  const rubrosUI = [
+const rubrosUI = [
   { id: "todos", nombre: "Todos" },
-  ...rubros.map(r => ({
+  ...rubrosUnicos.map(r => ({
     id: r,
-    nombre: r
+    nombre: r.charAt(0).toUpperCase() + r.slice(1)
   }))
 ];
 
   const ofertasFiltradas = ofertas.filter(o => {
-    if (!o.disponible) return false;
+    if (o.disponible !== undefined && o.disponible === false) {
+      return false;
+    }
+
     if (rubroSeleccionado === "todos") return true;
-    return o.rubro === rubroSeleccionado;
+
+    return (
+      o.rubro?.toLowerCase().trim() ===
+      rubroSeleccionado.toLowerCase().trim()
+    );
   });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-emerald-50">
       <Header />
 
-      {/* HERO */}
       <section className="bg-gradient-to-r from-sky-500 to-emerald-500 text-white py-24">
         <div className="container mx-auto px-4 text-center flex justify-center items-center flex-col gap-6">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+          <h1 className="text-5xl md:text-6xl font-bold">
             Ahorra más, vive mejor
           </h1>
-          <p className="text-xl text-sky-100 mb-8">
+          <p className="text-xl text-sky-100">
             Descubre descuentos exclusivos en restaurantes, spas y más
           </p>
           <Link to="/ofertas">
@@ -90,31 +53,29 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* CATEGORÍAS */}
       <section className="container mx-auto px-4 py-16">
         <h2 className="text-3xl font-bold text-center mb-8">
           Explora por categoría
         </h2>
+
         <div className="flex flex-wrap justify-center gap-4">
-          {rubros.map(r => (
+          {rubrosUI.map(r => (
             <button
               key={r.id}
               onClick={() => setRubroSeleccionado(r.id)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition
+              className={`px-6 py-3 rounded-full font-semibold transition flex items-center gap-2
                 ${
                   rubroSeleccionado === r.id
                     ? "bg-gradient-to-r from-sky-500 to-emerald-500 text-white shadow-lg"
                     : "bg-white text-gray-700 shadow hover:bg-sky-50"
                 }`}
             >
-              <img src={r.icono} alt="" className="w-5 h-5" />
               {r.nombre}
             </button>
           ))}
         </div>
       </section>
 
-      {/* OFERTAS */}
       <section className="container mx-auto px-4 pb-20">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold">Ofertas destacadas</h2>
@@ -123,38 +84,21 @@ export const Home = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {ofertasFiltradas.map(o => (
-            <div
-              key={o.id}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition overflow-hidden"
-            >
-              <div className={`bg-gradient-to-r ${o.color} p-8 text-center`}>
-                <span className="absolute bg-white text-sky-600 px-3 py-1 rounded-full text-sm font-bold">
-                  {o.descuento}% OFF
-                </span>
-                <img src={o.icono} alt="" className="w-16 h-16 mx-auto mb-3" />
-                <h3 className="text-white font-bold">{o.empresa}</h3>
-              </div>
-
-              <div className="p-6">
-                <h4 className="font-bold text-lg mb-3">{o.titulo}</h4>
-                <div className="flex gap-3 items-center mb-4">
-                  <span className="line-through text-gray-400">
-                    ${o.precioRegular}
-                  </span>
-                  <span className="text-3xl font-bold text-emerald-600">
-                    ${o.precioOferta}
-                  </span>
-                </div>
-
-                <Link to={`/detalle-oferta/${o.id}`}>
-                  <Button className="w-full">Ver oferta</Button>
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
+        {loading ? (
+          <p className="text-center text-gray-500">
+            Cargando ofertas...
+          </p>
+        ) : ofertasFiltradas.length === 0 ? (
+          <p className="text-center text-gray-500">
+            No hay ofertas disponibles
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {ofertasFiltradas.slice(0, 6).map(o => (
+              <OfertaCard key={o.id} oferta={o} />
+            ))}
+          </div>
+        )}
       </section>
 
       <Footer />
