@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { Header } from "../components/common/Header";
 import { Footer } from "../components/common/Footer";
 import { Button } from "../components/common/Button";
+import { useOfertas } from "../hooks/useOfertas";
+import { OfertaCard } from "../components/ofertas/OfertaCard";
 
 export const Home = () => {
   const [rubroSeleccionado, setRubroSeleccionado] = useState("todos");
+  const { ofertas, rubros, loading } = useOfertas();
 
   const ofertasDestacadas = [
     {
@@ -54,18 +57,19 @@ export const Home = () => {
     }
   ];
 
-  const rubros = [
-    { id: "todos", nombre: "Todos", icono: "/icons/world-humanitarian-day_3299012.png" },
-    { id: "restaurantes", nombre: "Restaurantes", icono: "/icons/restaurant_948036.png" },
-    { id: "belleza", nombre: "Belleza & Spa", icono: "/icons/beauty_4514888.png" },
-    { id: "fitness", nombre: "Fitness", icono: "/icons/fitness_2749777.png" },
-    { id: "entretenimiento", nombre: "Entretenimiento", icono: "/icons/music_14126345.png" },
-  ];
+  const rubrosUI = [
+  { id: "todos", nombre: "Todos" },
+  ...rubros.map(r => ({
+    id: r,
+    nombre: r
+  }))
+];
 
-  const ofertasFiltradas =
-    rubroSeleccionado === "todos"
-      ? ofertasDestacadas
-      : ofertasDestacadas.filter(o => o.rubro === rubroSeleccionado);
+  const ofertasFiltradas = ofertas.filter(o => {
+    if (!o.disponible) return false;
+    if (rubroSeleccionado === "todos") return true;
+    return o.rubro === rubroSeleccionado;
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-emerald-50">
